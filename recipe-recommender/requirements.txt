@@ -1,0 +1,6 @@
+flask
+flask-mysqldb
+gunicorn
+mysql-connector-python
+openai
+python-dotenv

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartMealPlanner - Affordable Recipe Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>SmartMealPlanner -Affordable Recipe Finder</h1>
+    <form method="POST">
+        <input type="text" name="ingredients" placeholder="Enter ingredients (e.g. rice, tomato)" required>
+        <input type="number" name="budget" placeholder="Max budget (GHS)" required>
+        <button type="submit">Find Recipes</button>
+    </form>
+
+    <h1> Community Shared Recipes</h1>
+
+    <form method="POST" action="/community">
+        <label> show meals under (GHS):</label>
+        <input type="number" name="budget" placeholder="e.g., 20">
+        <button type="submit">Filter</button>
+    </form>
+
+    {% for r in recipes %}
+    <div class="recipes-card">
+        <h2>{{ r[1] }}</h2>
+        <p><strong>Ingredients:</strong> {{ r[2] }}</p>
+        <p><strong> Instructions:</strong> {{ r[3] }}</p>
+        <p><strong>Budget:</strong> GHS {{ r[4] }}</p>
+        <p> Average Rating: {{r[6] }}</p>
+        <a href="/translate/{{ r[0] }}/Ewe">Translate to Ewe</a> |
+        <a href="/translate/{{ r[0] }}/Twi">Translate to Twi</a> |
+    </div>
+        {% endfor %}
+</body>
+</html>
