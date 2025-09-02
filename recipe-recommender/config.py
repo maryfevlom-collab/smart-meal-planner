@@ -1,5 +1,7 @@
 import os
 
+FLUTTERWAVE_SECRET_KEY = os.getenv("FLUTTERWAVE_SECRET_KEY")
+
 class Config:
     # Load environment variables (good for Render or local .env file)
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
