@@ -1,0 +1,452 @@
+{% extends 'base.html' %}
+
+{% block styles %} 
+    <style>
+    /* Header Section */
+        .about-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px 0;
+        }
+        
+        .about-header h1 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .about-header h1 span {
+            color: #2e8b57;
+        }
+        
+        .about-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Mission Section */
+        .mission-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .mission-section h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .mission-section h2 i {
+            color: #2e8b57;
+        }
+        
+        .mission-section p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Team Section */
+        .team-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .ceo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .ceo-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #2e8b57, #8fbc8f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .ceo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .ceo-info h3 {
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .ceo-title {
+            color: #2e8b57;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .ceo-bio {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .ceo-contact {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2e8b57;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: #2e8b57;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Values Section */
+        .values-section {
+            margin-bottom: 50px;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .value-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #e8f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #2e8b57;
+            font-size: 2rem;
+        }
+        
+        .value-card h3 {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .value-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        /* Story Section */
+        .story-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .story-section h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .story-section h2 i {
+            color: #2e8b57;
+        }
+        
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .story-text {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .story-text p {
+            margin-bottom: 20px;
+        }
+        
+        .story-image {
+            background: linear-gradient(45deg, #2e8b57, #8fbc8f);
+            border-radius: 15px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .story-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-image {
+                order: -1;
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .mission-section, .ceo-card, .story-section {
+                padding: 30px;
+            }
+            
+            .ceo-contact {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .about-header h1 {
+                font-size: 2rem;
+            }
+            
+            .mission-section h2, .section-title h2, .story-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .ceo-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .mission-section, .ceo-card, .value-card, .story-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <!-- Header Section -->
+        <div class="about-header">
+            <h1>About <span>Smart Meal Planner</span></h1>
+            <p>Transforming how people cook, eat, and share meals through AI-powered recipe generation</p>
+        </div>
+        
+        <!-- Mission Section -->
+        <section class="mission-section">
+            <h2><i class="fas fa-bullseye"></i> Our Mission</h2>
+            <p>At Smart Meal Planner, we believe that everyone should have access to delicious, affordable meals regardless of their cooking experience or budget. Our AI-powered platform helps you create amazing recipes from ingredients you already have, reducing food waste and saving you money while expanding your culinary horizons.</p>
+        </section>
+        
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="section-title">
+                <h2>Our Founder</h2>
+                <p>The visionary behind Smart Meal Planner</p>
+            </div>
+            
+            <div class="ceo-card">
+                <div class="ceo-image">
+                    <!-- Replace with your CEO's image -->
+                    <img src="{{ url_for('static', filename='MaryFevlom.jpg') }}" alt="CEO Name">
+                    <!-- <i class="fas fa-user"></i> -->
+                </div>
+                
+                <div class="ceo-info">
+                    <h3>Mary Fevlo</h3>
+                    <div class="ceo-title">Founder & CEO</div>
+                    <p class="ceo-bio">With a passion for cooking and technology, our founder created Smart Meal Planner to solve the everyday challenge of meal planning. Her vision combines culinary expertise with AI innovation to make cooking accessible and enjoyable for everyone.</p>
+                    
+                    <div class="ceo-contact">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Values Section -->
+        <section class="values-section">
+            <div class="section-title">
+                <h2>Our Values</h2>
+                <p>The principles that guide everything we do</p>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Accessibility</h3>
+                    <p>We believe everyone should have access to delicious, nutritious meals regardless of their budget or cooking experience.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>We continuously explore new ways to combine AI technology with culinary expertise to enhance your cooking experience.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community</h3>
+                    <p>We foster a supportive community where food lovers can share recipes, tips, and culinary inspiration.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Sustainability</h3>
+                    <p>We promote reducing food waste by helping you make the most of ingredients you already have.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Story Section -->
+        <section class="story-section">
+            <h2><i class="fas fa-history"></i> Our Story</h2>
+            
+            <div class="story-content">
+                <div class="story-text">
+                    <p>Smart Meal Planner was born from a simple observation: people often have ingredients in their kitchens but struggle to create delicious meals from them. Combined with the challenge of staying within a food budget, this inspired us to develop a solution that would make meal planning accessible to everyone.</p>
+                    
+                    <p>Launched in 2023, our platform has grown to serve thousands of users across Ghana and beyond, helping them create over 50,000 recipes and save on their food budgets. Our AI technology continues to learn and improve, offering increasingly personalized recipe suggestions.</p>
+                    
+                    <p>Today, we're proud to be at the intersection of culinary tradition and technological innovation, helping people discover the joy of cooking while making practical decisions about their food consumption and budget.</p>
+                </div>
+                
+                <div class="story-image">
+                    <!-- Optional: Replace with your company image -->
+                    Our Journey
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block script %} 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add subtle animation to value cards
+            const valueCards = document.querySelectorAll('.value-card');
+            
+            valueCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Add interaction to social links
+            const socialLinks = document.querySelectorAll('.social-link');
+            
+            socialLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FF9800;
+            --background-color: #f9f9f9;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .head-title {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .dataTables_wrapper {
+            background-color: var(--card-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        table.dataTable {
+            width: 100% !important;
+            margin: 0 !important;
+            border-collapse: collapse;
+        }
+        
+        table.dataTable thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 10px;
+        }
+        
+        table.dataTable tbody td {
+            padding: 10px;
+            vertical-align: top;
+        }
+        
+        table.dataTable tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        table.dataTable tbody tr:hover {
+            background-color: #e9f7e9;
+        }
+        
+        .recipe-title {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .ingredients-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .ingredients-list li {
+            display: inline;
+        }
+        
+        .ingredients-list li:after {
+            content: ", ";
+        }
+        
+        .ingredients-list li:last-child:after {
+            content: "";
+        }
+        
+        .instructions {
+            max-height: 100px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .cost-badge, .nutrition-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 2px 0;
+        }
+        
+        .cost-badge {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .nutrition-badge {
+            background-color: #f1f8e9;
+            color: #388e3c;
+        }
+        
+        .back-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #3d8b40;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .dataTables_wrapper {
+                padding: 10px;
+            }
+            
+            table.dataTable thead th, 
+            table.dataTable tbody td {
+                padding: 8px 5px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="head-title">
+            <h1>🍳 Recipe Database</h1>
+        </div>
+        
+        <div class="page-description">
+            <p>This page displays your recipes stored in our database. Use the search box to filter recipes or click on column headers to sort.</p>
+        </div>
+        
+        <div class="controls">
+            <div class="dataTables-length">
+                <label for="recipes-length">Show </label>
+                <select name="recipes-length" id="recipes-length">
+                    <option value="10">10</option>
+                    <option value="15" selected>15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <label for="recipes-length"> entries</label>
+            </div>
+        </div>
+        
+        <table id="recipes-table" class="display nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Ingredients</th>
+                    <th>Instructions</th>
+                    <th>Budget</th>
+                    <th>Added by:</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recipe in recipes %}
+                <tr>
+                    <td><span class="recipe-title">{{ recipe[1] }}</span></td>
+                    <td>
+                        <ul class="ingredients-list">
+                            {% for ingredient in recipe[2].split(',') %}
+                                <li>{{ ingredient.strip() }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="instructions">
+                            {{ recipe[3] }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="cost-badge">GHS {{ recipe[4] }}</span>
+                    </td>
+                    <td>
+                        <span class="nutrition-badge">{{ recipe[6] }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            var table = $('#recipes-table').DataTable({
+                "pageLength": 15,
+                "lengthMenu": [[10, 15, 25, 50, 100], [10, 15, 25, 50, 100]],
+                "responsive": true,
+                "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+                "language": {
+                    "search": "Filter recipes:",
+                    "lengthMenu": "Show _MENU_ recipes",
+                    "zeroRecords": "No matching recipes found",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ recipes",
+                    "infoEmpty": "No recipes available",
+                    "infoFiltered": "(filtered from _MAX_ total recipes)",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "Previous"
+                    }
+                }
+            });
+            
+            // Update length menu on change
+            $('#recipes-length').on('change', function() {
+                table.page.len(this.value).draw();
+            });
+        });
+    </script>
+{% endblock %}

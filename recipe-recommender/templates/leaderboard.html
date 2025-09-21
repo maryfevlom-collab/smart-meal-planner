@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% block styles %}
+<style>
+    /* Main Content */
+    .page-title {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .page-title h1 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    
+    .page-title p {
+        color: #666;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    /* Leaderboard Sections */
+    .leaderboard-section {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f4f8;
+    }
+    
+    .section-header i {
+        font-size: 1.8rem;
+        margin-right: 15px;
+        color: #2e8b57;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+        color: #2c3e50;
+    }
+    
+    /* Leaderboard Lists */
+    .leaderboard-list {
+        list-style: none;
+    }
+    
+    .leaderboard-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 15px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        transition: all 0.3s;
+    }
+    
+    .leaderboard-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .rank {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #2e8b57;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 20px;
+        flex-shrink: 0;
+    }
+    
+    .rank-1 {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    
+    .rank-2 {
+        background: linear-gradient(135deg, #C0C0C0 0%, #A9A9A9 100%);
+        box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+    }
+    
+    .rank-3 {
+        background: linear-gradient(135deg, #CD7F32 0%, #A56C21 100%);
+        box-shadow: 0 0 10px rgba(205, 127, 50, 0.5);
+    }
+    
+    .item-details {
+        flex-grow: 1;
+    }
+    
+    .item-details h3 {
+        font-size: 1.2rem;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+    
+    .item-meta {
+        display: flex;
+        align-items: center;
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    .item-meta i {
+        margin-right: 5px;
+        color: #2e8b57;
+    }
+    
+    .item-value {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #2e8b57;
+        margin-left: 15px;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .page-title h1 {
+            font-size: 2rem;
+        }
+        
+        .section-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .leaderboard-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .rank {
+            margin-bottom: 10px;
+        }
+        
+        .item-value {
+            margin: 10px 0 0;
+            align-self: flex-end;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Main Content -->
+    <main>
+        <section class="container">
+
+        <div class="page-title">
+            <h1>🏆 Recipe Leaderboard</h1>
+            <p>Celebrating our top contributors, most affordable recipes, and community favorites</p>
+        </div>
+
+        <!-- Top Contributors Section -->
+        <section class="leaderboard-section">
+            <div class="section-header">
+                <i class="fas fa-chef-hat"></i>
+                <h2>Top Recipe Contributors</h2>
+            </div>
+            
+            <ol class="leaderboard-list">
+                {% for user in top_users %}
+                <li class="leaderboard-item">
+                    <div class="rank{% if loop.index == 1 %} rank-1{% elif loop.index == 2 %} rank-2{% elif loop.index == 3 %} rank-3{% endif %}">
+                        {{ loop.index }}
+                    </div>
+                    <div class="item-details">
+                        <h3>{{ user[0] }}</h3>
+                        <div class="item-meta">
+                            <i class="fas fa-user"></i>
+                            Community Chef
+                        </div>
+                    </div>
+                    <div class="item-value">
+                        {{ user[1] }} recipes
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
+        </section>
+
+        <!-- Budget-Friendly Recipes Section -->
+        <section class="leaderboard-section">
+            <div class="section-header">
+                <i class="fas fa-coins"></i>
+                <h2>Most Affordable Recipes</h2>
+            </div>
+            
+            <ol class="leaderboard-list">
+                {% for recipe in affordable_recipes %}
+                <li class="leaderboard-item">
+                    <div class="rank{% if loop.index == 1 %} rank-1{% elif loop.index == 2 %} rank-2{% elif loop.index == 3 %} rank-3{% endif %}">
+                        {{ loop.index }}
+                    </div>
+                    <div class="item-details">
+                        <h3>{{ recipe[0] }}</h3>
+                        <div class="item-meta">
+                            <i class="fas fa-clock"></i>
+                            Quick & Budget-Friendly
+                        </div>
+                    </div>
+                    <div class="item-value">
+                        GHS {{ recipe[1] }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
+        </section>
+
+        <!-- Popular Recipes Section -->
+        <section class="leaderboard-section">
+            <div class="section-header">
+                <i class="fas fa-fire"></i>
+                <h2>Most Popular Recipes</h2>
+            </div>
+            
+            <ol class="leaderboard-list">
+                {% for recipe in popular_recipes %}
+                <li class="leaderboard-item">
+                    <div class="rank{% if loop.index == 1 %} rank-1{% elif loop.index == 2 %} rank-2{% elif loop.index == 3 %} rank-3{% endif %}">
+                        {{ loop.index }}
+                    </div>
+                    <div class="item-details">
+                        <h3>{{ recipe[0] }}</h3>
+                        <div class="item-meta">
+                            <i class="fas fa-heart"></i>
+                            Community Favorite
+                        </div>
+                    </div>
+                    <div class="item-value">
+                        {{ recipe[1] }} likes
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
+        </section>
+                </section>
+
+    </main>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation to leaderboard items
+        const leaderboardItems = document.querySelectorAll('.leaderboard-item');
+        
+        leaderboardItems.forEach((item, index) => {
+            // Add delay based on index for staggered animation
+            item.style.opacity = 0;
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+            
+            setTimeout(() => {
+                item.style.opacity = 1;
+                item.style.transform = 'translateY(0)';
+            }, 100);
+        });
+        
+        // Add hover effects to ranks
+        const ranks = document.querySelectorAll('.rank');
+        
+        ranks.forEach(rank => {
+            rank.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+            });
+            
+            rank.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>
+{% endblock %}

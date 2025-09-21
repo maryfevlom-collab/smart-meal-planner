@@ -4,3 +4,5 @@ gunicorn
 mysql-connector-python
 openai
 python-dotenv 
+
+flask flask-mysqldb mysql-connector-python python-dotenv 

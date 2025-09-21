@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+    main {
+        max-width: 800px;
+        width: 100%;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin: 0 auto;
+        margin-top: 80px;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    
+    /* Header */
+    .translation-header {
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+    }
+    
+    .translation-header h1 {
+        font-size: 2.2rem;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    
+    .language-badge {
+        display: inline-block;
+        background: linear-gradient(45deg, #2e8b57, #8fbc8f);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: 600;
+        margin-top: 10px;
+        box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3);
+    }
+    
+    /* Recipe Card */
+    .recipe-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #2e8b57;
+    }
+    
+    .recipe-card h2 {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e8f5e9;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .recipe-card h2 i {
+        color: #2e8b57;
+    }
+    
+    .recipe-section {
+        margin-bottom: 25px;
+    }
+    
+    .recipe-section:last-child {
+        margin-bottom: 0;
+    }
+    
+    .recipe-section h3 {
+        font-size: 1.3rem;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .recipe-section h3 i {
+        color: #2e8b57;
+        font-size: 1.1rem;
+    }
+    
+    .recipe-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        line-height: 1.8;
+        white-space: pre-line;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+    }
+    
+    /* Back Button */
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #2e8b57;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 12px 25px;
+        border: 2px solid #2e8b57;
+        border-radius: 30px;
+        transition: all 0.3s;
+    }
+    
+    .back-button:hover {
+        background: #2e8b57;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(46, 139, 87, 0.2);
+    }
+    
+    /* Translation Badge */
+    .translation-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #ffe066;
+        color: #333;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        box-shadow: 0 3px 10px rgba(255, 224, 102, 0.4);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        main {
+            padding: 25px;
+        }
+        
+        .translation-header h1 {
+            font-size: 1.8rem;
+        }
+        
+        .recipe-card {
+            padding: 20px;
+        }
+        
+        .recipe-card h2 {
+            font-size: 1.5rem;
+        }
+        
+        .recipe-content {
+            padding: 15px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .translation-header h1 {
+            font-size: 1.6rem;
+        }
+        
+        .recipe-section h3 {
+            font-size: 1.1rem;
+        }
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    main {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    .recipe-card {
+        animation: fadeIn 0.7s ease-out;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <!-- Translation Badge -->
+        <div class="translation-badge">
+            <i class="fas fa-language"></i> AI Translated
+        </div>
+        
+        <!-- Header -->
+        <div class="translation-header">
+            <h1>Recipe Translated to {{ lang }}</h1>
+            <div class="language-badge">
+                <i class="fas fa-globe"></i> {{ lang }} Version
+            </div>
+        </div>
+
+        <!-- Recipe Card -->
+        <div class="recipe-card">
+            <h2><i class="fas fa-utensils"></i> {{ title }}</h2>
+            
+            <div class="recipe-section">
+                <h3><i class="fas fa-carrot"></i> Ingredients</h3>
+                <div class="recipe-content">{{ ingredients }}</div>
+            </div>
+            
+            <div class="recipe-section">
+                <h3><i class="fas fa-list-ol"></i> Instructions</h3>
+                <div class="recipe-content">{{ instructions }}</div>
+            </div>
+        </div>
+        
+        <!-- Back Button -->
+        <a href="{{ url_for('community') }}" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Community Recipes
+        </a>
+    </main>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add subtle animation to content
+        const recipeContent = document.querySelectorAll('.recipe-content');
+        
+        recipeContent.forEach(content => {
+            // Preserve line breaks from the backend content
+            content.innerHTML = content.innerHTML.replace(/\n/g, '<br>');
+        });
+        
+        // Add click animation to back button
+        const backButton = document.querySelector('.back-button');
+        
+        backButton.addEventListener('click', function(e) {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+</script>
+{% endblock %}
